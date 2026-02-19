@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://172.17.100.15:9899/bootstrap.min.css">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+
+    {% block content %}
+    
+    {% endblock %}
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="http://172.17.100.15:9899/bootstrap.bundle.min.js"></script>
+</body>
+</html>
