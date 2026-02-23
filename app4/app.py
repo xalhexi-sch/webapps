@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 # ------------------------
 # Basic setup
 # ------------------------
-BASE_URL = "/it21_banas/webapps/app1"
+BASE_URL = "/it21_banas/webapps/app4"
 
 env = Environment(loader=FileSystemLoader("templates"))
 
@@ -25,7 +25,8 @@ def render(template, **context):
 url_map = Map([
     Rule("/", endpoint="home"),
     Rule("/products", endpoint="products"),
-    # Rule("/services", endpoint="services"),
+    Rule("/services", endpoint="services"),
+    Rule("/contactus", endpoint="contactus"),
     # Rule("/contactus", endpoint="contactus"),
 ])
 
@@ -42,13 +43,12 @@ def products(request):
         {"id": 2, "name": "Mechanical Keyboard", "brand": "Logitech", "price": 120, "stock": 25},
     ]
     return render("products.html", product_items=product_items)
-    
 
-# def services(request):
-#     return render("services.html")
+def services(request):
+    return render("services.html")
 
-# def contactus(request):
-#     return render("contactus.html")
+def contactus(request):
+    return render("contactus.html")
 
 # ------------------------
 # WSGI app
