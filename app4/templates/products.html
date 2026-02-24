@@ -1,20 +1,54 @@
 {% extends "base.html" %}
-
-{% block title %}Products{% endblock %}
+{% block title %}Products • IPT Shop{% endblock %}
 
 {% block content %}
-<h2>Our Products</h2>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <h2 class="fw-bold mb-0"><i class="bi bi-bag"></i> Products</h2>
 
-<div class="list-group">
-  {% for product in product_items %}
-    <div class="list-group-item">
-      <h5 class="mb-1">{{ product.name }}</h5>
-      <p class="mb-1">Brand: {{ product.brand }}</p>
-      <p class="mb-1">Price: ${{ product.price }}</p>
-      <p class="mb-1">Stock: {{ product.stock }} items available</p>
-    </div>
-    <hr>
-  {% endfor %}
+  <form class="d-flex gap-2" method="get" action="{{ url('/products') }}">
+    <input class="form-control" name="q" value="{{ q }}" placeholder="Search brand or item…">
+    <button class="btn btn-light"><i class="bi bi-search"></i></button>
+  </form>
 </div>
 
+<p class="muted mt-2 mb-4">Showing {{ product_items|length }} item(s).</p>
+
+<div class="row g-3">
+  {% for p in product_items %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card glass card-hover rounded-4 h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="card-title fw-bold mb-1">{{ p.name }}</h5>
+            <div class="muted small">{{ p.brand }}</div>
+          </div>
+          <span class="badge text-bg-light">{{ p.tag }}</span>
+        </div>
+
+        <div class="mt-3">
+          <div class="muted">Price</div>
+          <div class="fs-4 fw-bold">${{ p.price }}</div>
+        </div>
+
+        <div class="mt-3">
+          {% if p.stock > 10 %}
+            <span class="badge bg-success">In Stock ({{ p.stock }})</span>
+          {% elif p.stock > 0 %}
+            <span class="badge bg-warning text-dark">Low Stock ({{ p.stock }})</span>
+          {% else %}
+            <span class="badge bg-danger">Out of Stock</span>
+          {% endif %}
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <a class="btn btn-outline-light w-100" href="{{ url('/products/' ~ p.id) }}">
+            <i class="bi bi-eye"></i> View
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

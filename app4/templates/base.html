@@ -1,24 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My App{% endblock %}</title>
-    <!-- Bootstrap CSS (CDN for simplicity) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}IPT Shop{% endblock %}</title>
+
+  <!-- Apply saved theme ASAP (before CSS paints) -->
+  <script>
+  (() => {
+    const saved = localStorage.getItem("theme") || "dark"; // light | dark | neo
+    document.documentElement.setAttribute("data-theme", saved);
+    document.documentElement.setAttribute("data-bs-theme", saved === "light" ? "light" : "dark");
+  })();
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --radius: 1.25rem;
+      --shadow: 0 14px 45px rgba(0,0,0,.25);
+    }
+
+    /* ---------- THEMES (your own CSS variables) ---------- */
+    html[data-theme="dark"] {
+      --bg-flat: #0b1220;
+      --bg: #0b1220;
+      --text: #f8fafc;
+      --muted: rgba(248,250,252,.72);
+      --glass-bg: rgba(255,255,255,.06);
+      --glass-border: rgba(255,255,255,.12);
+      --hover: rgba(255,255,255,.08);
+      --input-bg: rgba(255,255,255,.08);
+      --input-border: rgba(255,255,255,.18);
+      --input-placeholder: rgba(248,250,252,.55);
+    }
+
+    html[data-theme="light"] {
+      --bg-flat: #f6f7fb;
+      --bg: #f6f7fb;
+      --text: #0f172a;
+      --muted: rgba(15,23,42,.70);
+      --glass-bg: rgba(255,255,255,.78);
+      --glass-border: rgba(15,23,42,.10);
+      --hover: rgba(15,23,42,.06);
+      --input-bg: rgba(255,255,255,.90);
+      --input-border: rgba(15,23,42,.14);
+      --input-placeholder: rgba(15,23,42,.45);
+    }
+
+    html[data-theme="neo"] {
+      --bg-flat: #060913;
+      --bg:
+        radial-gradient(1200px 800px at 20% 10%, rgba(56,189,248,.20), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(167,139,250,.18), transparent 50%),
+        #060913;
+      --text: #ecfeff;
+      --muted: rgba(236,254,255,.72);
+      --glass-bg: rgba(255,255,255,.06);
+      --glass-border: rgba(56,189,248,.22);
+      --hover: rgba(56,189,248,.12);
+      --input-bg: rgba(255,255,255,.07);
+      --input-border: rgba(56,189,248,.25);
+      --input-placeholder: rgba(236,254,255,.55);
+    }
+
+    /* ---------- BASE UI ---------- */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      /* Make Bootstrap components follow our theme colors */
+      --bs-body-color: var(--text);
+      --bs-body-bg: var(--bg-flat);
+    }
+
+    .app-wrap { max-width: 1100px; }
+    .muted { color: var(--muted) !important; }
+    a { text-decoration: none; }
+
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-hover:hover { transform: translateY(-2px); transition: .15s ease; }
+
+    /* Fix card text colors the Bootstrap way (no dark text on dark cards) */
+    .card {
+      --bs-card-bg: var(--glass-bg);
+      --bs-card-border-color: var(--glass-border);
+      --bs-card-color: var(--text);
+      border-radius: var(--radius);
+    }
+
+    /* Inputs */
+    .form-control, .form-select, textarea {
+      background: var(--input-bg) !important;
+      color: var(--text) !important;
+      border-color: var(--input-border) !important;
+    }
+    .form-control::placeholder, textarea::placeholder {
+      color: var(--input-placeholder) !important;
+    }
+
+    /* Navbar link styling */
+    .nav-link { color: var(--muted) !important; }
+    .nav-link.active { color: var(--text) !important; font-weight: 700; }
+
+    /* Theme button */
+    .btn-theme {
+      border: 1px solid var(--glass-border) !important;
+      color: var(--text) !important;
+      background: var(--glass-bg) !important;
+    }
+    .btn-theme:hover { background: var(--hover) !important; }
+
+    /* Dropdown */
+    .dropdown-menu {
+      background: var(--glass-bg) !important;
+      border: 1px solid var(--glass-border) !important;
+      border-radius: 1rem !important;
+      backdrop-filter: blur(10px);
+    }
+    .dropdown-item { color: var(--text) !important; border-radius: .75rem; }
+    .dropdown-item:hover { background: var(--hover) !important; }
+
+    /* Toggler visibility */
+    html[data-theme="light"] .navbar-toggler-icon { filter: invert(0); }
+    html[data-theme="dark"]  .navbar-toggler-icon,
+    html[data-theme="neo"]   .navbar-toggler-icon { filter: invert(1); }
+
+    /* Small polish */
+    code { color: inherit; }
+  </style>
 </head>
+
 <body>
+  <div class="container app-wrap py-4">
+    {% include "navigation.html" %}
+    <main class="mt-4">
+      {% block content %}{% endblock %}
+    </main>
 
-    
-    
-    <div class="container mt-4">
-         {% include "navigation.html" %}
+    <footer class="mt-5 pt-4 border-top border-light border-opacity-10 muted small">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <span>© IPT Shop • Built with Werkzeug + Jinja2</span>
+        <span><i class="bi bi-lightning-charge"></i> app4</span>
+      </div>
+    </footer>
+  </div>
 
-         
-        {% block content %}{% endblock %}
-    </div>
-
-    <!-- Bootstrap JS Bundle (with Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function applyTheme(t) {
+      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.setAttribute("data-bs-theme", t === "light" ? "light" : "dark");
+      localStorage.setItem("theme", t);
+    }
+  </script>
 </body>
 </html>

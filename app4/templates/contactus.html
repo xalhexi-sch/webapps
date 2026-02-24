@@ -1,26 +1,35 @@
 {% extends "base.html" %}
-
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact • IPT Shop{% endblock %}
 
 {% block content %}
-<h2>Contact Us</h2>
-<p>Feel free to reach out to us through the contact form below.</p>
+<h2 class="fw-bold"><i class="bi bi-envelope"></i> Contact Us</h2>
+<p class="muted">Send a message (POST). It saves to <code>~/contact_messages.log</code>.</p>
 
-<!-- Contact Form -->
-<form>
-  <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Your name">
+{% if sent %}
+  <div class="alert alert-success">
+    <b>Sent!</b> Thanks — we received your message.
   </div>
+{% endif %}
+
+<form class="glass rounded-4 p-4" method="post" action="{{ url('/contactus') }}">
   <div class="mb-3">
-    <label for="email" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="email" placeholder="Your email">
+    <label class="form-label">Name</label>
+    <input class="form-control {% if errors.name %}is-invalid{% endif %}" name="name" value="{{ values.name }}" placeholder="Your name">
+    {% if errors.name %}<div class="invalid-feedback">{{ errors.name }}</div>{% endif %}
   </div>
+
   <div class="mb-3">
-    <label for="message" class="form-label">Message</label>
-    <textarea class="form-control" id="message" rows="3" placeholder="Your message"></textarea>
+    <label class="form-label">Email</label>
+    <input class="form-control {% if errors.email %}is-invalid{% endif %}" name="email" value="{{ values.email }}" placeholder="you@email.com">
+    {% if errors.email %}<div class="invalid-feedback">{{ errors.email }}</div>{% endif %}
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+  <div class="mb-3">
+    <label class="form-label">Message</label>
+    <textarea class="form-control {% if errors.message %}is-invalid{% endif %}" name="message" rows="4" placeholder="Type your message...">{{ values.message }}</textarea>
+    {% if errors.message %}<div class="invalid-feedback">{{ errors.message }}</div>{% endif %}
+  </div>
+
+  <button class="btn btn-light"><i class="bi bi-send"></i> Submit</button>
 </form>
-
 {% endblock %}
