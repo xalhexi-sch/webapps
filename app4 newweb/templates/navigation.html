@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg glass px-3 py-2">
+  <a class="navbar-brand fw-bold" href="{{ url('/') }}">
+    <i class="bi bi-shop"></i> IPT Shop
+  </a>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="nav">
+    <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+      <li class="nav-item">
+        <a class="nav-link {% if active=='home' %}active{% endif %}" href="{{ url('/') }}">
+          <i class="bi bi-house"></i> Home
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {% if active=='products' %}active{% endif %}" href="{{ url('/products') }}">
+          <i class="bi bi-bag"></i> Products
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {% if active=='services' %}active{% endif %}" href="{{ url('/services') }}">
+          <i class="bi bi-wrench-adjustable"></i> Services
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {% if active=='contactus' %}active{% endif %}" href="{{ url('/contactus') }}">
+          <i class="bi bi-envelope"></i> Contact
+        </a>
+      </li>
+
+      <li class="nav-item dropdown ms-lg-2 mt-2 mt-lg-0">
+        <button class="btn btn-sm btn-theme dropdown-toggle" data-bs-toggle="dropdown">
+          <i class="bi bi-palette"></i> Theme
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end p-2">
+          <li><button class="dropdown-item" type="button" onclick="applyTheme('light')">☀️ Light</button></li>
+          <li><button class="dropdown-item" type="button" onclick="applyTheme('dark')">🌙 Dark</button></li>
+          <li><button class="dropdown-item" type="button" onclick="applyTheme('neo')">⚡ Neo</button></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
