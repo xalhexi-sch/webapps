@@ -1,35 +1,38 @@
 {% extends "base.html" %}
-{% block title %}Contact • IPT Shop{% endblock %}
+
+{% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold"><i class="bi bi-envelope"></i> Contact Us</h2>
-<p class="muted">Send a message (POST). It saves to <code>~/contact_messages.log</code>.</p>
 
-{% if sent %}
-  <div class="alert alert-success">
-    <b>Sent!</b> Thanks — we received your message.
-  </div>
-{% endif %}
+<h2>Contact Us</h2>
+<p>If you have questions or need assistance, feel free to contact us.</p>
 
-<form class="glass rounded-4 p-4" method="post" action="{{ url('/contactus') }}">
-  <div class="mb-3">
-    <label class="form-label">Name</label>
-    <input class="form-control {% if errors.name %}is-invalid{% endif %}" name="name" value="{{ values.name }}" placeholder="Your name">
-    {% if errors.name %}<div class="invalid-feedback">{{ errors.name }}</div>{% endif %}
-  </div>
+<hr>
 
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input class="form-control {% if errors.email %}is-invalid{% endif %}" name="email" value="{{ values.email }}" placeholder="you@email.com">
-    {% if errors.email %}<div class="invalid-feedback">{{ errors.email }}</div>{% endif %}
-  </div>
+<h3>📍 Our Location</h3>
+<p><h2>Agusan Pequeño, Butuan City, Philippines</h2></p>
 
-  <div class="mb-3">
-    <label class="form-label">Message</label>
-    <textarea class="form-control {% if errors.message %}is-invalid{% endif %}" name="message" rows="4" placeholder="Type your message...">{{ values.message }}</textarea>
-    {% if errors.message %}<div class="invalid-feedback">{{ errors.message }}</div>{% endif %}
-  </div>
+<h3>📞 Phone Number</h3>
+<p><h2>+63 938 894 4690</h2></p>
 
-  <button class="btn btn-light"><i class="bi bi-send"></i> Submit</button>
+<h3>📧 Email Address</h3>
+<p><h2>acierda1995@gmail.com</h2></p>
+
+<hr>
+
+<h3>Send Us a Message</h3>
+
+<form method="POST" action="#">
+    <label>Full Name:</label><br>
+    <input type="text" name="fullname" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message" rows="5" required></textarea><br><br>
+
+    <button type="submit">Send Message</button>
 </form>
+
 {% endblock %}

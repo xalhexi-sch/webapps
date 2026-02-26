@@ -1,23 +1,38 @@
 {% extends "base.html" %}
-{% block title %}Services • IPT Shop{% endblock %}
+
+{% block title %}Services{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold"><i class="bi bi-wrench-adjustable"></i> Services</h2>
-<p class="muted">Simple services list (great practice for loops & cards).</p>
 
-<div class="row g-3">
-  {% for s in services %}
-  <div class="col-md-6">
-    <div class="glass rounded-4 p-4 card-hover h-100">
-      <div class="d-flex justify-content-between align-items-start">
-        <div>
-          <div class="fw-bold">{{ s.title }}</div>
-          <div class="muted mt-1">{{ s.desc }}</div>
-        </div>
-        <div class="badge text-bg-light fs-6">{{ s.price }}</div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+<h2>Our Services</h2>
+<p>We provide high-quality tech products and support services for our customers.</p>
+
+<hr>
+
+<div>
+    <h3>💻 Laptop Repair</h3>
+    <p>We repair hardware and software issues for laptops and desktop computers.</p>
 </div>
+
+<br>
+
+<div>
+    <h3>⌨️ Computer Accessories</h3>
+    <p>We sell gaming keyboards, mouse, headsets, and other computer accessories.</p>
+</div>
+
+<br>
+
+<div>
+    <h3>🛠 Technical Support</h3>
+    <p>Need help? Our team offers troubleshooting and installation assistance.</p>
+</div>
+
+<br>
+
+<div>
+    <h3>🚚 Product Delivery</h3>
+    <p>Fast and secure delivery for all purchased items.</p>
+</div>
+
 {% endblock %}

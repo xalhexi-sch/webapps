@@ -1,35 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Home • IPT Shop{% endblock %}
+
+{% block title %}Home - MyApp{% endblock %}
 
 {% block content %}
-<div class="glass rounded-4 p-4 p-md-5">
-  <div class="row align-items-center g-4">
-    <div class="col-md-7">
-      <h1 class="display-6 fw-bold">Clean UI. Simple Python. Ready for IPT.</h1>
-      <p class="muted mt-3">
-        This app uses <b>Werkzeug routing</b> + <b>Jinja2 templates</b> + <b>Bootstrap</b>.
-        Next step can be DB integration (SQLite/MySQL) or even Django migration.
-      </p>
-      <div class="d-flex gap-2 mt-4 flex-wrap">
-        <a class="btn btn-light btn-lg" href="{{ url('/products') }}"><i class="bi bi-bag"></i> Browse Products</a>
-        <a class="btn btn-outline-light btn-lg" href="{{ url('/contactus') }}"><i class="bi bi-chat-dots"></i> Message Us</a>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="glass rounded-4 p-4">
-        <div class="d-flex align-items-center gap-3">
-          <i class="bi bi-lightning-charge fs-1"></i>
-          <div>
-            <div class="fw-bold">Deploy-style structure</div>
-            <div class="muted small">Gunicorn on :5000 → Nginx on :9899</div>
-          </div>
-        </div>
-        <hr class="border-light border-opacity-10">
-        <div class="muted small">
-          Tip: You can test locally with <code>curl</code> then open the school-style URL in browser.
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<h1>Welcome to MyApp</h1>
+<p>This is the home page. You can navigate through the app using the navigation bar above.</p>
 {% endblock %}
