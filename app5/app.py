@@ -1,10 +1,8 @@
 from werkzeug.wrappers import Request, Response
 from werkzeug.routing import Map, Rule
 from werkzeug.exceptions import NotFound
+from werkzeug.utils import redirect
 import sqlite3
-
-
-
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -13,17 +11,16 @@ from jinja2 import Environment, FileSystemLoader
 # Basic setup
 # ------------------------
 
-
 BASE_URL = "/it21_banas/webapps/app5"
-
 
 env = Environment(loader=FileSystemLoader("templates"))
 
 
 def render(template, **context):
     context.update({
-        "base_url": BASE_URL,        
+        "base_url": BASE_URL,
     })
+
     return Response(
         env.get_template(template).render(**context),
         content_type="text/html"
@@ -33,20 +30,24 @@ def render(template, **context):
 # ------------------------
 # Routes
 # ------------------------
+
 url_map = Map([
-    Rule("/", endpoint="home"),    
-    Rule("/products", endpoint="products"),    
+    Rule("/", endpoint="home"),
+
+    Rule("/products", endpoint="products"),
+    Rule("/products/add", endpoint="add_product", methods=["GET", "POST"]),
+    Rule("/products/view", endpoint="view_products"),
+
     Rule("/services", endpoint="services"),
-    Rule("/register", endpoint="register",methods=["GET", "POST"]),
+    Rule("/register", endpoint="register", methods=["GET", "POST"]),
 ])
 
 
 # ------------------------
 # View functions
 # ------------------------
+
 def home(request):
-
-
     return render("home.html")
 
 
@@ -54,18 +55,15 @@ def register(request):
     error = None
     success = None
 
-
     if request.method == "POST":
+
         email = request.form.get("email").strip()
-        password    = request.form.get("password").strip()
-   
+        password = request.form.get("password").strip()
 
-
-        if not email :
+        if not email:
             error = "All fields are required."
-        else:          
+        else:
             success = f"Welcome, {email}! You are registered."
-
 
     return render("register.html", error=error, success=success)
 
@@ -92,45 +90,53 @@ def products(request):
         })
 
     return render("products.html", product_items=product_items)
-    
-    
-    product_items = [
-        {
-            "id": 1,
-            "name": "Gaming Laptop",
-            "brand": "Dell",
-            "price": 1500,
-            "stock": 10
-        },
-        {
-            "id": 2,
-            "name": "Mechanical Keyboard",
-            "brand": "Logitech",
-            "price": 120,
-            "stock": 25
-        }]
-    
-    return render("products.html", product_items = product_items)    
 
 
- 
 def services(request):
-
-
     return render("services.html")
+
+
+def add_product(request):
+
+    if request.method == "POST":
+
+        name = request.form.get("name")
+        brand = request.form.get("brand")
+        price = request.form.get("price")
+        stock = request.form.get("stock")
+
+        conn = sqlite3.connect("products.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO products (name, brand, price, stock) VALUES (?, ?, ?, ?)",
+            (name, brand, price, stock)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/it21_banas/webapps/app5/products/view")
+
+    return render("add_product.html")
+
+
+def view_products(request):
+    return products(request)
 
 
 # ------------------------
 # WSGI app
 # ------------------------
+
 @Request.application
 def app(request):
-    adapter = url_map.bind_to_environ(request.environ)
 
+    adapter = url_map.bind_to_environ(request.environ)
 
     try:
         endpoint, values = adapter.match()
         return globals()[endpoint](request, **values)
+
     except NotFound:
         return Response("404 Not Found", status=404)
-
