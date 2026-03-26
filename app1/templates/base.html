@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sample</title>
+    <link rel="stylesheet" href="/it21-banas/static/css/bootstrap.min.css">
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NAVBAR — defined once here, inherited by every child page
+         ═══════════════════════════════════════════════════════════ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+
+            <!-- Brand -->
+            <a class="navbar-brand fw-bold" href="/it21-banas/">
+                &#128230; My WSGI App
+            </a>
+
+            <!-- Mobile toggle -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav links -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_home %}{% endblock %}"
+                           href="/it21-banas/">
+                            Home
+                        </a>
+                    </li>
+                    <!-- About Us -->
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_about %}{% endblock %}"
+                           href="/it21-banas/about">
+                            About Us
+                        </a>
+                    </li>
+
+                    <!-- Contact Us -->
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_contact %}{% endblock %}"
+                           href="/it21-banas/contact">
+                            Contact Us
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- End Nav links -->
+
+        </div>
+    </nav>
+    <!-- ═══════════════════════════════════════════════════════════
+         END NAVBAR
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ── Main content ───────────────────────────────────────── -->
+    <main class="container mt-4 mb-5 flex-grow-1">
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+    <!-- ── End Main content ───────────────────────────────────── -->
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer class="bg-dark text-secondary text-center py-3 mt-auto">
+        <small>&copy; 2025 My WSGI App &mdash; CSP Department | IPT 1</small>
+    </footer>
+    <!-- ── End Footer ─────────────────────────────────────────── -->
+
+    <script src="/it21-banas/static/js/bootstrap.bundle.min.js"></script>
+   
+</body>
+</html>

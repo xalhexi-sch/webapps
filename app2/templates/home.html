@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body text-center p-5">
+                <h1 class="card-title display-5 fw-bold">{{ heading }}</h1>
+                <p class="card-text text-muted fs-5">{{ message }}</p>
+                <a href="/it21-banas/products" class="btn btn-primary mt-3">
+                    &#128203; View Products
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

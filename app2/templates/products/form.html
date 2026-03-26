@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block nav_products %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/it21-banas/products">Products</a>
+                </li>
+                {% if product %}
+                <li class="breadcrumb-item">
+                    <a href="/it21-banas/products/{{ product.product_id }}">
+                        {{ product.product_name }}
+                    </a>
+                </li>
+                {% endif %}
+                <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+        </nav>
+
+        <!-- Form card -->
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">{{ title }}</h4>
+            </div>
+
+            <div class="card-body p-4">
+
+                <!-- Validation error -->
+                {% if error %}
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <span class="me-2">&#9888;</span>
+                    <div>{{ error }}</div>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{{ action }}">
+
+                    <!-- Product Name -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Product Name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               name="product_name"
+                               class="form-control"
+                               placeholder="e.g. Laptop Pro 15"
+                               value="{{ product.product_name if product else '' }}"
+                               required>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Category</label>
+                        <input type="text"
+                               name="product_category"
+                               class="form-control"
+                               placeholder="e.g. Electronics, Clothing, Food"
+                               value="{{ product.product_category if product else '' }}">
+                        <div class="form-text">Optional.</div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Price <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">&#8369;</span>
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="product_price"
+                                   class="form-control"
+                                   placeholder="0.00"
+                                   value="{{ product.product_price if product else '' }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Description</label>
+                        <textarea name="product_description"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Optional product description">{{ product.product_description if product else '' }}</textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary px-4">
+                            {% if product %}&#10003; Update{% else %}&#10003; Save{% endif %}
+                        </button>
+                        <a href="/it21-banas/products" class="btn btn-secondary">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

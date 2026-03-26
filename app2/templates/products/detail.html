@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.product_name }}{% endblock %}
+{% block nav_products %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/it21-banas/products">Products</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    {{ product.product_name }}
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Product card -->
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">{{ product.product_name }}</h4>
+                <span class="badge bg-secondary">ID: {{ product.product_id }}</span>
+            </div>
+
+            <div class="card-body p-4">
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <th class="text-muted" style="width:35%">Category</th>
+                        <td>
+                            {% if product.product_category %}
+                            <span class="badge bg-secondary fs-6">
+                                {{ product.product_category }}
+                            </span>
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-muted">Price</th>
+                        <td class="fw-bold text-success fs-5">
+                            &#8369; {{ "%.2f" | format(product.product_price | float) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-muted">Description</th>
+                        <td>{{ product.product_description or '—' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-footer d-flex gap-2">
+                <a href="/it21-banas/products/{{ product.product_id }}/edit"
+                   class="btn btn-warning">Edit</a>
+                <form method="post"
+                      action="/it21-banas/products/{{ product.product_id }}/delete"
+                      onsubmit="return confirm('Delete this product? This cannot be undone.')">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="/it21-banas/products" class="btn btn-secondary ms-auto">
+                    &#8592; Back to List
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
